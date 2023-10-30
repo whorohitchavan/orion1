@@ -1,0 +1,50 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+</head>
+<body>
+    <h1>All Users</h1>
+    <ul>
+        {% for user in users %}
+            <li class="user-item">
+                <div class="user-email">Email: {{ user.email }}</div>
+                <div class="user-password">Password: {{ user.password }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+<style>
+    /* styles.css */
+
+    /* Style the page title */
+    h1 {
+        color: #007bff;
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    /* Style the user list items */
+    .user-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px;
+        list-style: none;
+    }
+    
+    /* Style the user email and password */
+    .user-email {
+        font-weight: bold;
+    }
+    
+    .user-password {
+        color: #888;
+    }
+    
+</style>
+</body>
+</html>

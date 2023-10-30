@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        /* Custom styles for the cart page */
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .btn-primary {
+            background-color: #ff6c5e;
+            border-color: #ff6c5e;
+        }
+
+        .btn-primary:hover {
+            background-color: #e64536;
+            border-color: #e64536;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #1e7e34;
+            border-color: #1e7e34;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Your Cart</h2>
+    <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+
+    <!-- Display cart items here -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>{{ item.discount }}%</td>
+                    <td>
+                        <form method="POST" action="/remove-from-cart/{{ item._id }}">
+                            <button type="submit" class="btn btn-danger" name="delete" value="true">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="text-right">
+        <!-- Calculate the total price here -->
+{% set total_price = 0.0 %}
+{% for item in cart %}
+    {% set item_price = item.price - (item.price * item.discount / 100) %}
+    {% set total_price = total_price + item_price %}
+{% endfor %}
+<p>Total Price: ${{ total_price }}</p>
+
+
+        
+        <!-- Add a checkout button -->
+        <a href="/checkout" class="btn btn-success">Checkout</a>
+    </div>
+</div>
+
+</body>
+</html>
